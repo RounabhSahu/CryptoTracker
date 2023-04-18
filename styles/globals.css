@@ -2,4 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/**{*/
+/*    border: 1px solid red;*/
+/*}*/
+.CurrencyHighlighted{
+    @apply bg-lime-300 border-b-4 border-amber-500 transition-colors duration-1000 ease-in-out;
+}
+.animating {
+    transition: opacity 2s ease-in-out;
+}

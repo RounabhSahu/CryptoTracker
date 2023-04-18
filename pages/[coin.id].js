@@ -18,9 +18,7 @@ const CoinDashboard = () => {
     const coin = router.query['coin.id'];
 
     const { data, error } = useSWR(
-        `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=usd&days=1`,
-        fetcher
-    );
+        `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=usd&days=30`, fetcher    );
 
     if (error) console.error(error);
 
