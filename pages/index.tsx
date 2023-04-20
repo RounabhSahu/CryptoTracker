@@ -61,21 +61,22 @@ function CryptoData({data: originalData, page, error, searchString, currency, ti
     return (
         <div className='w-full px-2'>
             {pagedData.map((coin) => (
+                <Link href={`/${coin.id}`}>
                 <div
                     key={coin.id}
                     className="flex flex-row border border-lime-300 rounded-sm mt-2 items-center py-2"
                 >
-                    <div className='flex flex-row justify-start items-center text-left basis-1/2'>
+                    <div className='flex flex-row justify-start items-center text-left basis-1/2 ml-1 sm:ml-4'>
                         <img src={coin.image} alt={coin.name} className="w-8 h-8 my-auto"/>
-                        <div className="text-2xl mx-2 my-auto">
-                            <Link href={`/${coin.id}`}>
+                        <div className="text-xl md:text-2xl mx-2 my-auto">
+
                                 <div>{coin.name}</div>
-                            </Link>
+
                         </div>
                     </div>
-                    <div className="text-2xl mx-2 basis-1/4 text-justify">{`${currency[1]} ${coin.current_price}`}</div>
+                    <div className="text-xl md:text-2xl mx-2 basis-1/4 text-justify">{`${currency[1]} ${coin.current_price}`}</div>
                     <div
-                        className={`text-2xl text-bold mx-2 basis-1/4 text-right transition-color duration-1000 ${
+                        className={`text-xl md:text-2xl text-bold mx-2 basis-1/4 text-right transition-color duration-1000 ${
                             coin[timezone] &&
                             coin[timezone] >= 0
                                 ? "text-lime-600"
@@ -84,7 +85,9 @@ function CryptoData({data: originalData, page, error, searchString, currency, ti
                     >
                         {`${coin[timezone]>0?`+${coin[timezone].toFixed(2)} %`:`- ${(-coin[timezone]).toFixed(2)} %`}`}
                     </div>
+
                 </div>
+                </Link>
             ))}
         </div>
     );
@@ -128,7 +131,7 @@ const Home = () => {
     const [searchText, setSearchText] = useState("");
     const [index, setIndex] = useState(0);
     const [index2, setIndex2] = useState(0);
-    const letters = "CRYPTOTRACKER".split("")
+    const letters = "CRYPTO TRACKER".split("")
     const currencyData=[['USD', '$'],['INR', '₹'],['EUR', '€'],['JPY', '¥']]
     const ranges =[['1 Hour','1h'],['24 Hours','24h'],['7 days','7d'],['14 days','14d'],['30 days','30d'],['200 days','200d'],['1 year','1y']]
     const {data, error} = CryptoDataFetcher(currencyData[index2][0]);
@@ -136,7 +139,7 @@ const Home = () => {
         <div className='w-full m-0 p-0 bg-gradient-to-t from-slate-900 to-teal-900 text-white'>
             <div className="h-screen w-full flex flex-col justify-center items-center animate-pulse">
                 <div className="text-center">
-                    <h1 className="text-3xl  text-8xl text-transparent bg-clip-text bg-gradient-to-b from-sky-300 to-amber-200 waviy">
+                    <h1 className="text-3xl text-8xl font-rubik-pixels waviy ">
                         {letters.map((letter, index) => (
                             <span key={index} style={{'--i': index + 1} as CSSProperties}>{letter}</span>
                         ))}
@@ -150,16 +153,16 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className={'h-screen mx-10'}>
+            <div className={'lg:h-screen sm:mx-10 py-10'}>
 
-                <div className='flex flex-row text-center justify-around'>
-                    <div className='text-xl bg-slate-900 px-4 pt-1'>
+                <div className='flex flex-col lg:flex-row text-center'>
+                    <div className='text-xl w-full lg:w-auto my-1 lg:my-0 bg-slate-900 px-4 pt-1'>
                         <span className={'font-sans'}>CURRENCY</span>
-                        <div className='flex flex-row justify-between text-lg my-1'>
-                            {currencyData.map((item,i)=>(
+                        <div className='flex flex-row text-lg my-1 justify-center flex-wrap'>
+                            {currencyData.map((item, i) => (
                                 <div
                                     key={i}
-                                    className={`cursor-pointer px-4 py-1 ${i === index2 ? 'CurrencyHighlighted' : 'Currency'}`}
+                                    className={`flex-grow cursor-pointer px-4 py-1 ${i === index2 ? 'CurrencyHighlighted' : 'Currency'}`}
                                     onClick={() => setIndex2(i)}
                                 >
                                     {item[0]} {item[1]}
@@ -167,7 +170,8 @@ const Home = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="text-xl bg-slate-900 flex-1 flex flex-col items-center mx-2">
+
+                    <div className="text-xl w-full lg:w-auto my-1 lg:my-0 bg-slate-900 flex-1 flex flex-col items-center lg:mx-2">
                         <div className="m-0 px-8 py-0.5 text-xl font-sans">SEARCH</div>
                         <input
                             className="border border-transparent Currency bg-transparent w-full px-2 mx-4 my-1 h-full text-2xl text-black text-center flex items-center justify-center focus:outline-none focus:border-amber-400"
@@ -180,13 +184,13 @@ const Home = () => {
                         />
 
                     </div>
-                    <div className='text-xl bg-slate-900 px-4 pt-1'>
+                    <div className='text-xl w-full lg:w-auto my-1 lg:my-0 bg-slate-900 px-4 pt-1'>
                         <span className={'font-sans'}>TIME RANGE</span>
-                        <div className='flex flex-row justify-between text-lg my-1'>
+                        <div className='flex flex-row justify-center lg:justify-between text-lg my-1 flex-wrap'>
                             {ranges.map((range, i) =>(
                                 <div
                                     key={i}
-                                    className={`cursor-pointer px-4 py-1 ${index === i ? 'CurrencyHighlighted' : 'Currency'}`}
+                                    className={`flex-grow cursor-pointer px-4 py-1 ${index === i ? 'CurrencyHighlighted' : 'Currency'}`}
                                     onClick={()=>setIndex(i)}
                                 >
                                     {range[0]}
@@ -194,14 +198,15 @@ const Home = () => {
                             ))}
                         </div>
                     </div>
+
                 </div>
 
-                <div className='mx-10 my-4 flex flex-col justify-center items-center'>
+                <div className=' sm:mx-10 my-4 flex flex-col justify-center items-center'>
                     <div className={`flex flex-row items-center justify-center w-full text-justify px-2 py-4 bg-teal-900 text-xl border-0 border-b-4 border-yellow-600`}>
-                        <div className={'basis-1/2'}>
+                        <div className={'basis-1/2 pl-2'}>
                             Name
                         </div>
-                        <div className={'basis-1/4'}>
+                        <div className={'basis-1/4 text-left mr-10'}>
                             Price in {currencyData[index2][0]} {currencyData[index2][1]}
                         </div>
                         <div className={'basis-1/4 text-right'}>

@@ -15,15 +15,21 @@
     transition: opacity 2s ease-in-out;
 }
 .waviy {
+    z-index: 2;
     position: relative;
+
 }
 .waviy span {
+    z-index: 2;
     position: relative;
     display: inline-block;
 
     text-transform: uppercase;
     animation: flip 2s infinite;
-    animation-delay: calc(.2s * var(--i))
+    animation-delay: calc(.2s * var(--i));
+    background: linear-gradient(to bottom, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 @keyframes flip {
     0%,80% {
