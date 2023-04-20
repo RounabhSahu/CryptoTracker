@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import {useState} from "react";
 import Link from "next/link";
+import { CSSProperties } from 'react';
 
 function CryptoDataFetcher(currency: string) {
     const {data, error} = useSWR(
@@ -89,12 +90,16 @@ function CryptoData({data: originalData, page, error, searchString, currency, ti
     );
 }
 
+function handleScrollToBottom() {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
 const Pagination = ({page, setPage, maxPages}) => {
     return (
         <div>
             <button
                 className={`border border-2 rounded-lg text-center text-xl px-8 py-2 transition-colors duration-[2000] ${
-                    page === 1  || maxPages === 0 ? "border-gray-300 bg-gray-200" : "border-blue-300 bg-lime-200"
+                    page === 1  || maxPages === 0 ? "border-gray-300 bg-gray-800 text-white" : " text-black  border-blue-300 bg-lime-400"
                 }`}
                 onClick={() => setPage((page) => page - 1)}
                 disabled={page === 1 || maxPages === 0}
@@ -106,7 +111,7 @@ const Pagination = ({page, setPage, maxPages}) => {
             </span>
             <button
                 className={`border border-2 rounded-lg text-center text-xl px-8 py-2 transition-colors duration-[2000] ${
-                    page === maxPages  || maxPages === 0 ? "border-gray-300 bg-gray-200" : "border-blue-300 bg-lime-200"
+                    page === maxPages  || maxPages === 0 ? "border-gray-300 bg-gray-800 text-white" : " text-black border-blue-300 bg-lime-400"
                 }`}
                 onClick={() => setPage((page) => page + 1)}
                 disabled={page === maxPages || maxPages === 0}
@@ -123,68 +128,95 @@ const Home = () => {
     const [searchText, setSearchText] = useState("");
     const [index, setIndex] = useState(0);
     const [index2, setIndex2] = useState(0);
-
+    const letters = "CRYPTOTRACKER".split("")
     const currencyData=[['USD', '$'],['INR', '₹'],['EUR', '€'],['JPY', '¥']]
     const ranges =[['1 Hour','1h'],['24 Hours','24h'],['7 days','7d'],['14 days','14d'],['30 days','30d'],['200 days','200d'],['1 year','1y']]
     const {data, error} = CryptoDataFetcher(currencyData[index2][0]);
     return (
-        <div>
-            <h1 className={"text-3xl"}>Crypto Tracker</h1>
-            <div className='flex flex-row text-center justify-around'>
-                <div className='text-xl'>
-                    Currency
-                    <div className='flex flex-row justify-between  text-lg'>
-                        {currencyData.map((item,i)=>(
-                            <div
-                                key={i}
-                                className={`cursor-pointer px-4 py-2 rounded ${i === index2 ? 'CurrencyHighlighted' : ''}`}
-                                onClick={() => setIndex2(i)}>{item[0]} {item[1]}
-                            </div>
+        <div className='w-full m-0 p-0 bg-gradient-to-t from-slate-900 to-teal-900 text-white'>
+            <div className="h-screen w-full flex flex-col justify-center items-center animate-pulse">
+                <div className="text-center">
+                    <h1 className="text-3xl  text-8xl text-transparent bg-clip-text bg-gradient-to-b from-sky-300 to-amber-200 waviy">
+                        {letters.map((letter, index) => (
+                            <span key={index} style={{'--i': index + 1} as CSSProperties}>{letter}</span>
                         ))}
-                    </div>
+                    </h1>
                 </div>
-                <div className='text-xl'>
-                    Time Range
-                    <div className=' flex flex-row justify-around text-lg'>
-                        {ranges.map((range, i) =>(
-                            <div
-                                key={i}
-                                className={`cursor-pointer px-4 py-2 rounded ${index === i ? 'CurrencyHighlighted' : ''}`} onClick={()=>setIndex(i)}>{range[0]}</div>
-                        ))}
+                <div className="absolute bottom-[100px]" onClick={handleScrollToBottom}>
+                    <div className="arrow">
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
                 </div>
             </div>
-            <div className="border border-blue-300 rounded p-0 flex flex-row w-[400px] mx-10 my-2">
-                <div className="m-0 h-full px-8 py-2 bg-blue-200 text-xl">Search</div>
-                <input
-                    className="border border-blue-300 w-full px-2 text-xl text-center items-center justify-center flex"
-                    type="text"
-                    value={searchText}
-                    onChange={(e) => {
-                        setPage(1)
-                        setSearchText(e.target.value)
-                    }}
-                />
-            </div>
-            <div className='mx-10 my-4 flex flex-col justify-center items-center'>
-                <div className={`flex flex-row items-center justify-center w-full text-justify px-2 py-4 bg-lime-200 text-xl`}>
-                    <div className={'basis-1/2'}>
-                        Name
-                    </div>
-                    <div className={'basis-1/4'}>
-                        Price in {currencyData[index2][0]} {currencyData[index2][1]}
-                    </div>
-                    <div className={'basis-1/4 text-right'}>
-                        Price Change Percentage in {ranges[index][0]}
-                    </div>
-                </div>
-                <CryptoData data={data} error={error} page={page} searchString={searchText.toLowerCase()} currency={currencyData[index2]} timestamp={ranges[index]} setNumPages={(x)=>setNumPages(x)}/>
-            </div>
+            <div className={'h-screen mx-10'}>
 
-            <div className='flex justify-center items-center'>
-                <Pagination page={page} setPage={setPage} maxPages={numPages}/>
+                <div className='flex flex-row text-center justify-around'>
+                    <div className='text-xl bg-slate-900 px-4 pt-1'>
+                        <span className={'font-sans'}>CURRENCY</span>
+                        <div className='flex flex-row justify-between text-lg my-1'>
+                            {currencyData.map((item,i)=>(
+                                <div
+                                    key={i}
+                                    className={`cursor-pointer px-4 py-1 ${i === index2 ? 'CurrencyHighlighted' : 'Currency'}`}
+                                    onClick={() => setIndex2(i)}
+                                >
+                                    {item[0]} {item[1]}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="text-xl bg-slate-900 flex-1 flex flex-col items-center mx-2">
+                        <div className="m-0 px-8 py-0.5 text-xl font-sans">SEARCH</div>
+                        <input
+                            className="border border-transparent Currency bg-transparent w-full px-2 mx-4 my-1 h-full text-2xl text-black text-center flex items-center justify-center focus:outline-none focus:border-amber-400"
+                            type="text"
+                            value={searchText}
+                            onChange={(e) => {
+                                setPage(1)
+                                setSearchText(e.target.value)
+                            }}
+                        />
+
+                    </div>
+                    <div className='text-xl bg-slate-900 px-4 pt-1'>
+                        <span className={'font-sans'}>TIME RANGE</span>
+                        <div className='flex flex-row justify-between text-lg my-1'>
+                            {ranges.map((range, i) =>(
+                                <div
+                                    key={i}
+                                    className={`cursor-pointer px-4 py-1 ${index === i ? 'CurrencyHighlighted' : 'Currency'}`}
+                                    onClick={()=>setIndex(i)}
+                                >
+                                    {range[0]}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <div className='mx-10 my-4 flex flex-col justify-center items-center'>
+                    <div className={`flex flex-row items-center justify-center w-full text-justify px-2 py-4 bg-teal-900 text-xl border-0 border-b-4 border-yellow-600`}>
+                        <div className={'basis-1/2'}>
+                            Name
+                        </div>
+                        <div className={'basis-1/4'}>
+                            Price in {currencyData[index2][0]} {currencyData[index2][1]}
+                        </div>
+                        <div className={'basis-1/4 text-right'}>
+                            Price Change Percentage in {ranges[index][0]}
+                        </div>
+                    </div>
+                    <CryptoData data={data} error={error} page={page} searchString={searchText.toLowerCase()} currency={currencyData[index2]} timestamp={ranges[index]} setNumPages={(x)=>setNumPages(x)}/>
+                </div>
+
+                <div className='flex justify-center items-center'>
+                    <Pagination page={page} setPage={setPage} maxPages={numPages}/>
+                </div>
             </div>
         </div>
+
     );
 };
 
