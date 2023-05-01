@@ -69,3 +69,7 @@ svg {
 @keyframes stroke-offset{
     100% {stroke-dashoffset: -35%;}
 }
+
+.tab tr{
+    @apply text-right;
+}

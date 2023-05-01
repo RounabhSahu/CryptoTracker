@@ -48,6 +48,7 @@ function CryptoData({data: originalData,error, page, searchString, currency, tim
             {pagedData.map((coin) => (
                 <Link
                     key={coin.id}
+                    className='hover:bg-sky-500/20 cursor-pointer'
                     href={`/${coin.id}`}>
                 <div
                     key={coin.id}
@@ -144,19 +145,6 @@ const Home = ({initialData}) => {
             <div className="h-screen w-full flex flex-col justify-center items-center">
                 <div className="text-center">
                     <div className="w-screen container">
-                        {/*<svg viewBox="0 0 5200 850" className='hidden lg:flex'>*/}
-                        {/*    <symbol id="s-text">*/}
-                        {/*        <text textAnchor="middle" x="50%" y="50%">CRYPTOTRACKER</text>*/}
-                        {/*    </symbol>*/}
-                        {/*    <g className="g-ants">*/}
-                        {/*        <use xlinkHref="#s-text" className="text-copy"></use>*/}
-                        {/*        <use xlinkHref="#s-text" className="text-copy"></use>*/}
-                        {/*        <use xlinkHref="#s-text" className="text-copy"></use>*/}
-                        {/*        <use xlinkHref="#s-text" className="text-copy"></use>*/}
-                        {/*        <use xlinkHref="#s-text" className="text-copy"></use>*/}
-                        {/*        <use xlinkHref="#s-text" className="text-copy"></use>*/}
-                        {/*    </g>*/}
-                        {/*</svg>*/}
                         <svg viewBox="0 0 2800 850" className='lg:w-1/2 mx-auto font-rubik-pixels'>
                             <symbol id="m-text">
                                 <text textAnchor="middle" x="50%" y="90%">CRYPTO</text>
@@ -189,7 +177,7 @@ const Home = ({initialData}) => {
                                 <text textAnchor="middle" x="50%" y="50%">EXPLORE THE WORLD OF DIGITAL CURRENCIES</text>
                             </symbol>
                             <g className="g-ants">
-                                <use xlinkHref="#k-text" className="text-copy just"></use>
+                                <use xlinkHref="#k-text" className="text-copy"></use>
                                 <use xlinkHref="#k-text" className="text-copy hidden"></use>
                                 <use xlinkHref="#k-text" className="text-copy hidden"></use>
                                 <use xlinkHref="#k-text" className="text-copy hidden"></use>
@@ -198,11 +186,6 @@ const Home = ({initialData}) => {
                             </g>
                         </svg></div>
                     </div>
-                    {/*<h1 className="text-3xl text-8xl font-rubik-pixels waviy ">*/}
-                    {/*    {letters.map((letter, index) => (*/}
-                    {/*        <span key={index} style={{'--i': index + 1} as CSSProperties}>{letter}</span>*/}
-                    {/*    ))}*/}
-                    {/*</h1>*/}
                 </div>
 
             </div>
@@ -267,9 +250,6 @@ const Home = ({initialData}) => {
                         <div className={'basis-1/4 text-right'}>
                             Price Change Percentage in {ranges[index][0]}
                         </div>
-                        {/*<div className={`bg-[#ff15f2] h-2 w-full bottom-0  absolute  ${loading?"opacity-100":"opacity-0"}`}>*/}
-
-                        {/*</div>*/}
                     </div>
 
                     {loading?

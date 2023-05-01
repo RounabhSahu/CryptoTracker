@@ -24,6 +24,7 @@ const CoinDashboard = ({initialData ,descData}) => {
     const [index3, setIndex3] = useState(1);
     const router = useRouter();
     const coin = router.query['coin.id'];
+    const period=[['24 Hours','24h'],['7 Days','7d'],['14 Days','14d'],['30 Days','30d'],['60 Days','60d'],['200 Days','200d'],['1 Year','1y']]
     const ranges =[['1 day','1'],['3 days','3'], ['7 days','7'],['14 days','14'],['1 month','30'],['3 months','90'],['6 months','180'],['1 year','365'],['2 years','730']]
     const currencyData=[['USD', '$'],['INR', '₹'],['EUR', '€'],['JPY', '¥']]
     const typeGraph=['Price Data', 'Market Capital Data', 'Total Volume Data']
@@ -271,22 +272,95 @@ const CoinDashboard = ({initialData ,descData}) => {
                     </div>
                     <div  className=' flex flex-row  justify-left items-center'>
                         <div className='border border-amber-500 rounded px-4 py-2 h-full basis-2/5 font-mono bg-gradient-to-t from-amber-400/20 to-transparent'>
-                            <h1 className='text-3xl'>Description</h1>
-                            <div className='description-content text-justify' dangerouslySetInnerHTML={{ __html: descData.description.en }}></div>
+                            <h1 className='text-3xl text-amber-500 text-center'>Description</h1>
+                            <div className='description-content text-justify text-xl' dangerouslySetInnerHTML={{ __html: descData.description.en }}></div>
                         </div>
-                        <div className='border border-amber-500 rounded px-4 py-2 h-full basis-3/5 font-mono bg-gradient-to-t from-amber-400/20 to-transparent'>
-                            <div>
-                                <h1>Stats</h1>
-                                <div className='flex flex-col justify-between'>
+                        <div className='px-4 py-2 h-full basis-3/5 font-mono justify-around space-y-4'>
+                            <div className='border border-amber-500 rounded px-4 py-2 bg-gradient-to-t from-amber-400/20 to-transparent'>
+                                <h1 className='text-3xl text-amber-500 text-center'>Market Statistics</h1>
+                                <div className='flex flex-col justify-between text-2xl'>
                                     <span className='flex flex-col'>
-                                        <span>Genesis Date :</span>
-                                        <span>{descData.genesis_date}</span>
-                                        <span>Current Price :</span>
-                                        <span>{descData.market_data.current_price[currencyData[index2][0].toString().toLowerCase()]} {currencyData[index2][1]} </span>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'>{descData.genesis_date} <span className='text-sky-500'> Genesis Date</span></span>
+                                        </div>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'>{currencyData[index2][1]} {descData.market_data.current_price[currencyData[index2][0].toString().toLowerCase()]} <span className='text-sky-500'> Current Price</span></span>
+                                        </div>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'>{currencyData[index2][1]} {descData.market_data.ath[currencyData[index2][0].toString().toLowerCase()]} <span className='text-sky-500'> All time High</span></span>
+                                        </div>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'>{currencyData[index2][1]} {descData.market_data.ath_change_percentage[currencyData[index2][0].toString().toLowerCase()]} % <span className='text-sky-500'> ( % ) All time High Change </span></span>
+                                        </div>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'>{currencyData[index2][1]} {descData.market_data.atl[currencyData[index2][0].toString().toLowerCase()]} <span className='text-sky-500'> All time Low</span></span>
+                                        </div>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'>{currencyData[index2][1]} {descData.market_data.atl_change_percentage[currencyData[index2][0].toString().toLowerCase()]} % <span className='text-sky-500'> ( % ) All time Low Change</span></span>
+                                        </div>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'>{currencyData[index2][1]} {descData.market_data.market_cap[currencyData[index2][0].toString().toLowerCase()]} <span className='text-sky-500'> Market Capital</span></span>
+                                        </div>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'>Rank {descData.market_data.market_cap_rank} <span className='text-sky-500'> Market Capital Rank</span></span>
+                                        </div>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'>{currencyData[index2][1]} {descData.market_data.fully_diluted_valuation[currencyData[index2][0].toString().toLowerCase()]===undefined?"NA":descData.market_data.fully_diluted_valuation[currencyData[index2][0].toString().toLowerCase()]} <span className='text-sky-500'> Fully Diluted Valuation</span></span>
+                                        </div>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'>{currencyData[index2][1]} {descData.market_data.total_volume[currencyData[index2][0].toString().toLowerCase()]===undefined?"NA":descData.market_data.total_volume[currencyData[index2][0].toString().toLowerCase()]} <span className='text-sky-500'> Total Volume</span></span>
+                                        </div>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'>{descData.market_data.circulating_supply===undefined?"NA":descData.market_data.circulating_supply} <span className='text-sky-500'> Circulating Supply</span></span>
+                                        </div>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'>{descData.market_data.total_supply===undefined?'NA':descData.market_data.total_supply} <span className='text-sky-500'> Total Supply</span></span>
+                                        </div>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'> {descData.market_data.max_supply===undefined?'NA':descData.market_data.max_supply} <span className='text-sky-500'> Max Supply</span></span>
+                                        </div>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'>{currencyData[index2][1]} {descData.market_data.high_24h[currencyData[index2][0].toString().toLowerCase()]} <span className='text-sky-500'> Highest In 24 hours</span></span>
+                                        </div>
+                                        <div className='flex flex-row'>
+                                            <span className=' text-right w-full flex justify-between'>{currencyData[index2][1]} {descData.market_data.low_24h[currencyData[index2][0].toString().toLowerCase()]}  <span className='text-sky-500'> Lowest In 24 hours</span></span>
+                                        </div>
                                     </span>
                                 </div>
                             </div>
+                            <div className='border border-amber-500 rounded px-4 py-2 bg-gradient-to-t from-amber-400/20 to-transparent'>
+                                <h1 className='text-3xl text-amber-500 text-center'>Price Change</h1>
+                                <table className="w-full tab">
+                                    <thead>
+                                    <tr className='text-amber-500 text-xl'>
+                                        <th className="p-2 text-left">Time Period</th>
+                                        <th className="p-2 text-right">% Change</th>
+                                        <th className="p-2 text-right">% Change in Currency ( {`${currencyData[index2][0]} ${currencyData[index2][1]}`} )</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {
+                                        period.map((item,i)=>{
+                                            return (
+                                                <tr className="hover:bg-sky-500/20 text-lg" key={i}>
+                                                    <td className="p-2 text-left">{item[0]}</td>
+                                                    <td className={`p-2 ${descData.market_data[`price_change_percentage_${item[1]}`] > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                                                        {descData.market_data[`price_change_percentage_${item[1]}`] > 0 ? '+' : ''}{descData.market_data[`price_change_percentage_${item[1]}`]} %
+                                                    </td>
+                                                    <td className={`p-2 ${descData.market_data[`price_change_percentage_${item[1]}_in_currency`][currencyData[index2][0].toString().toLowerCase()] > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                                                        {descData.market_data[`price_change_percentage_${item[1]}_in_currency`][currencyData[index2][0].toString().toLowerCase()] > 0 ? '+' : ''}{descData.market_data[`price_change_percentage_${item[1]}_in_currency`][currencyData[index2][0].toString().toLowerCase()]} %
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+
                     </div>
                 </div>
 
