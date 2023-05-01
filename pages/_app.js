@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import PropTypes from 'prop-types'
-
+import "../styles/loader.scss"
 function MyApp({ Component, pageProps }) {
     return <Component {...pageProps} />
 }

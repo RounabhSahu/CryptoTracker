@@ -7,7 +7,7 @@ class MyDocument extends Document {
                 <Head>
                     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet"/>
                 </Head>
-                <body>
+                <body className='h-full bg-black tex'>
                 <Main />
                 <NextScript />
                 </body>
