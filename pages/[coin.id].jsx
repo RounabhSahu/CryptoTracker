@@ -270,12 +270,12 @@ const CoinDashboard = ({initialData ,descData}) => {
                         </svg>
 
                     </div>
-                    <div  className=' flex flex-row  justify-left items-center'>
-                        <div className='border border-amber-500 rounded px-4 py-2 h-full basis-2/5 font-mono bg-gradient-to-t from-amber-400/20 to-transparent'>
+                    <div  className=' flex lg:flex-row flex-col justify-left items-center'>
+                        <div className='border border-amber-500 rounded px-4 py-2 mx-4 lg:mx-auto h-full lg:basis-2/5 font-mono bg-gradient-to-t from-amber-400/20 to-transparent'>
                             <h1 className='text-3xl text-amber-500 text-center'>Description</h1>
                             <div className='description-content text-justify text-xl' dangerouslySetInnerHTML={{ __html: descData.description.en }}></div>
                         </div>
-                        <div className='px-4 py-2 h-full basis-3/5 font-mono justify-around space-y-4'>
+                        <div className='px-4 py-2 h-full lg:basis-3/5 font-mono justify-around space-y-4'>
                             <div className='border border-amber-500 rounded px-4 py-2 bg-gradient-to-t from-amber-400/20 to-transparent'>
                                 <h1 className='text-3xl text-amber-500 text-center'>Market Statistics</h1>
                                 <div className='flex flex-col justify-between text-2xl'>
